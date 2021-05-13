@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StartPageComponent } from './start-page.component';
+import { GroceryListComponent } from './grocery-list.component';
 
-describe('StartPageComponent', () => {
-  let component: StartPageComponent;
-  let fixture: ComponentFixture<StartPageComponent>;
+describe('GroceryListComponent', () => {
+  let component: GroceryListComponent;
+  let fixture: ComponentFixture<GroceryListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StartPageComponent ]
+      declarations: [ GroceryListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StartPageComponent);
+    fixture = TestBed.createComponent(GroceryListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

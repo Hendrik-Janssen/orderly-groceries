@@ -1,0 +1,9 @@
+<ul class="input-group list-group mb-3" *ngIf="groceryList$ | async as groceryList">
+    <li class="list-group-item" *ngFor="let groceryItem of groceryList.items">
+        <input type="text" class="form-control" placeholder="item" aria-label="item" aria-describedby="item" [(ngModel)]="groceryItem.name">
+    </li>
+    <li class="list-group-item">
+        <input type="text" class="form-control" placeholder="item" aria-label="item" aria-describedby="item" 
+        [(ngModel)]="newGroceryItem.name" (keyup.enter)="addNewGroceryItem(groceryList)">
+    </li>
+</ul>
