@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && http-server -p 8080 -c-1 dist/orderly-groceries-ui",
+    "start": "ng build --configuration production && http-server -p 8080 -c-1 dist/orderly-groceries-ui",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "predeploy": "ng build --prod --base-href=/orderly-groceries/",
+    "predeploy": "ng build --configuration production --base-href=/orderly-groceries/",
     "deploy": "npx gh-pages -d dist/orderly-groceries-ui"
   },
   "private": true,
@@ -25,7 +25,7 @@
     "@angular/service-worker": "~12.0.0",
     "@ng-bootstrap/ng-bootstrap": "^9.1.1",
     "bootstrap": "^4.5.0",
-    "node": "^14.0.0",
+    "node": "^14.15.0",
     "npm": "^7.5.6",
     "rxjs": "^6.5.3",
     "tslib": "^2.2.0",
