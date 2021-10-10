@@ -1,18 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgControl, NgForm } from '@angular/forms';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { GroceryItem } from './grocery-item';
 import { GroceryList } from './grocery-list';
+import { GroceryListService } from './grocery-list.service';
 
 @Component({
     selector: 'grocery-list',
     templateUrl: './grocery-list.component.html',
     styleUrls: ['./grocery-list.component.scss']
 })
-export class GroceryListComponent implements OnInit {
+export class GroceryListComponent {
 
-    private groceryListSource$ = new ReplaySubject<GroceryList>();
-    
     groceryList$: Observable<GroceryList>;
     newGroceryItem = new GroceryItem();
 
@@ -21,17 +20,15 @@ export class GroceryListComponent implements OnInit {
 
     @ViewChild('newGroceryItemNameInput', { read: ElementRef })
     newGroceryItemNameInput: ElementRef|null = null;
-    
-    constructor() {
-        this.groceryList$ = this.groceryListSource$.asObservable();
-    }
 
-    ngOnInit(): void {
-        this.groceryListSource$.next(new GroceryList([
-            new GroceryItem('Melk', 'zuivel'),
-            new GroceryItem('Eieren', 'zuivel'),
-            new GroceryItem('Tomaten', 'fruit')
-        ]));
+    @ViewChild('newGroceryItemNameInput', {read: NgControl})
+    newGroceryItemNameInputControl: NgControl | null = null;
+
+    @ViewChild('newGroceryItemLabelInput', {read: NgControl})
+    newGroceryItemLabelInputControl: NgControl | null = null;
+    
+    constructor(private groceryListService: GroceryListService) {
+        this.groceryList$ = this.groceryListService.getGroceryList();
     }
 
     addNewGroceryItem(groceryList: GroceryList): void {
@@ -44,13 +41,10 @@ export class GroceryListComponent implements OnInit {
 
     removeItem(groceryList: GroceryList, itemIndex: number): void {
         groceryList.items.splice(itemIndex, 1);
-        this.groceryListSource$.next(groceryList);
+        this.groceryListService.updateGroceryList(groceryList);
     }
 
     private resetNewGroceryItemInput() {
-        this.groceryListForm?.control.markAsPristine();
-        this.groceryListForm?.control.markAsUntouched();
-        this.groceryListForm?.control.reset();
         this.newGroceryItem.name = null;
         this.newGroceryItem.label = null;
         this.newGroceryItemNameInput?.nativeElement.focus()
@@ -58,6 +52,6 @@ export class GroceryListComponent implements OnInit {
 
     private addNewGroceryItemToList(groceryList: GroceryList) {
         groceryList.items.push(JSON.parse(JSON.stringify(this.newGroceryItem)));
-        this.groceryListSource$.next(groceryList);
+        this.groceryListService.updateGroceryList(groceryList);
     }
 }

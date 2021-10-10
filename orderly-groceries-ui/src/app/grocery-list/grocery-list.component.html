@@ -1,5 +1,6 @@
 <ng-form #groceryListForm>
     <ul class="input-group list-group mb-3" *ngIf="groceryList$ | async as groceryList">
+        {{groceryList | json}}
         <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let groceryItem of groceryList.items; index as i">
             <div class="col-8 margin-right-5">
                 <input type="text" class="form-control" placeholder="item" [(ngModel)]="groceryItem.name" name="'groceryItem' + {{i}}" disabled=true>
@@ -18,7 +19,7 @@
                 <input 
                     type="text" class="form-control" placeholder="name" [(ngModel)]="newGroceryItem.name" 
                     (keyup.enter)="addNewGroceryItem(groceryList)" 
-                    required name='newGroceryItemNameInputControl' #newGroceryItemNameInput="ngModel"
+                    required name='newGroceryItemNameInput' #newGroceryItemNameInput="ngModel"
                     [ngClass]="newGroceryItemNameInput.invalid && (newGroceryItemNameInput.dirty || newGroceryItemNameInput.touched) ? 'is-invalid' : ''">
                 <div class="invalid-feedback" *ngIf="newGroceryItemNameInput.invalid && (newGroceryItemNameInput.dirty || newGroceryItemNameInput.touched)">
                     Item name is required
